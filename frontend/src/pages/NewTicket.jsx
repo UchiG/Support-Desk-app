@@ -1,49 +1,38 @@
-import { useState, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
-import { createTicket, reset } from "../features/tickets/ticketSlice"
-import Spinner from "../components/Spinner"
-import BackButton from "../components/BackButton"
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { createTicket } from '../features/tickets/ticketSlice'
+import BackButton from '../components/BackButton'
 
 function NewTicket() {
   const { user } = useSelector((state) => state.auth)
-  const {isLoading, isSuccess, isError, message} = useSelector(state => state.tickets)
+
+  const [name] = useState(user.name)
+  const [email] = useState(user.email)
+  const [product, setProduct] = useState('iPhone')
+  const [description, setDescription] = useState('')
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [name] = useState(user.name)
-  const [email] = useState(user.email)
-  const [product, setProduct] = useState("")
-  const [description, setDescription] = useState("")
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-
-    if (isSuccess) {
-      dispatch(reset())
-      navigate("/tickets")
-    }
-
-    dispatch(reset())
-  }, [dispatch, isError, isSuccess, message, navigate])
-
   const onSubmit = (e) => {
     e.preventDefault()
-
     dispatch(createTicket({ product, description }))
+      .unwrap()
+      .then(() => {
+        // We got a good response so navigate the user
+        navigate('/tickets')
+        toast.success('New ticket created!')
+      })
+      .catch(toast.error)
   }
-
-  if (isLoading) return (<Spinner />)
 
   return (
     <>
-    <BackButton url='/' />
-      <section className="heading">
-        <h1>Create new Ticket</h1>
+      <BackButton />
+      <section className='heading'>
+        <h1>Create New Ticket</h1>
         <p>Please fill out the form below</p>
       </section>
 

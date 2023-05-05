@@ -1,21 +1,20 @@
-const { bold } = require("colors")
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 const noteSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'Ticket',
     },
     text: {
       type: String,
-      required: [true, "Please add some text"],
+      required: [true, 'Please add some text'],
     },
     isStaff: {
       type: Boolean,
@@ -30,4 +29,4 @@ const noteSchema = mongoose.Schema(
   }
 )
 
-module.exports = mongoose.model("Note", noteSchema)
+module.exports = mongoose.model('Note', noteSchema)
