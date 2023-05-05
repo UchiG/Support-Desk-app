@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === "production") {
   )
 } else {
   app.get("/", (req, res) => {
-    res.status(201).send({ message: "Welcome to the support desk API!" })
+    res.status(200).send({ message: "Welcome to the support desk API!" })
   })
 }
 
@@ -36,3 +36,5 @@ app.use(errorHandler)
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
 })
+
+// Edited for heroku build

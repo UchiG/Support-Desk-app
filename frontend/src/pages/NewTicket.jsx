@@ -19,11 +19,11 @@ function NewTicket() {
   const onSubmit = (e) => {
     e.preventDefault()
     dispatch(createTicket({ product, description }))
-      .unwrap()
-      .then(() => {
-        // We got a good response so navigate the user
-        navigate('/tickets')
-        toast.success('New ticket created!')
+    .unwrap()
+    .then(() => {
+      // We got a good response so navigate the user
+      navigate('/tickets')
+      toast.success('New ticket created!')
       })
       .catch(toast.error)
   }
@@ -81,3 +81,5 @@ function NewTicket() {
 }
 
 export default NewTicket
+
+// Fixed the error
